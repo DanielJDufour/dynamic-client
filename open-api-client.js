@@ -6,16 +6,16 @@ export class OpenAPIClient {
   constructor({ debugLevel = 0, url }) {
     // remove trailing slash
     this._base = url.replace(/\/$/, "");
-    this._debug_level = debugLevel;
+    this._debugLevel = debugLevel;
   }
 
   async init() {
     const definitionUrl = this._base.replace(/\/$/, "") + "/openapi.json";
-    if (this.debug_level >= 1)
+    if (this._debugLevel >= 1)
       console.log("[open-api-client] definitionUrl:", definitionUrl);
 
     const { data: definition } = await axios.get(definitionUrl);
-    if (this.debug_level >= 2)
+    if (this._debugLevel >= 2)
       console.log("[open-api-client] definition:", definition);
 
     const groups = {};
@@ -31,13 +31,13 @@ export class OpenAPIClient {
         })
         .filter(it => it.length > 0);
 
-      if (this.debug_level >= 3) console.log("[open-api-client] parts:", parts);
+      if (this._debugLevel >= 3) console.log("[open-api-client] parts:", parts);
 
       const key = JSON.stringify(parts);
       if (key in groups) groups[key].push({ path, methods });
       else groups[key] = [{ path, methods }];
     });
-    if (this.debug_level >= 2) console.log("[open-api-client] groups:", groups);
+    if (this._debugLevel >= 2) console.log("[open-api-client] groups:", groups);
 
     // add groups to API Client
     Object.entries(groups).forEach(([key, grp]) => {
@@ -71,6 +71,18 @@ export class OpenAPIClient {
             return true;
           });
 
+          const responseMimeTypes = Object.keys(
+            endpoint.methods[method].responses["200"].content
+          );
+          let responseType;
+          if (responseMimeTypes.includes("application/json"))
+            responseType = "json";
+          else if (responseMimeTypes.includes("application/x-binary"))
+            responseType = "arraybuffer";
+          else if (responseMimeTypes.includes("text/plain"))
+            responseType = "text";
+          else responseType = "json";
+
           const { path } = endpoint;
 
           const callparams = endpoint.methods[method].parameters;
@@ -91,12 +103,13 @@ export class OpenAPIClient {
             // need to add support for post
           });
           url = this._base + url + "?" + query.toString();
+          if (this._debugLevel >= 2) console.log("[open-api-client] url:", url);
 
-          if (this.debug_level >= 2) console.log("[open-api-client] url:", url);
-
-          return axios[method](url).then(res => res.data);
+          return axios[method](url, { responseType }).then(res => res.data);
         };
       });
     });
   }
 }
+
+if (typeof window === "object") window.OpenAPIClient = OpenAPIClient;

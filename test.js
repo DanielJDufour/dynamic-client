@@ -18,3 +18,19 @@ test("example: fetching list of stac assets", async ({ eq }) => {
   });
   eq(assets, ["B5", "B6", "B7", "B8"]);
 });
+
+test("example: fetching array buffer", async ({ eq }) => {
+  const client = new OpenAPIClient({
+    debugLevel: 0,
+    url: "http://localhost:8000/"
+  });
+  await client.init();
+  const tile = await client.cog.tiles.get({
+    x: 15304,
+    y: 27127,
+    z: 16,
+    url:
+      "https://storage.googleapis.com/pdd-stac/disasters/hurricane-harvey/0831/20170831_172754_101c_3b_Visual.tif"
+  });
+  eq(Buffer.isBuffer(tile), true);
+});

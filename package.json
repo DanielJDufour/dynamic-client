@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "format": "npx prettier --arrow-parens=avoid --trailing-comma=none --write *.js",
-    "test": "node test.js"
+    "test": "node test.js",
+    "test:html": "npx concurrently \"npx snowpack build --polyfill-node\" && sh -c \"cd build && npx http-server\""
   },
   "repository": {
     "type": "git",

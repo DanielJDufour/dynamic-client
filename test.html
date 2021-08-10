@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/flug"></script>
+    <script src="https://unpkg.com/easy-script-loader"></script>
+    <script src="./open-api-client.js" type="module"></script>
+  </head>
+  <body>
+    <script type="module">
+      test("example: fetching array buffer", async ({ eq }) => {
+        const client = new OpenAPIClient({ url: "http://localhost:8000/" });
+        await client.init();
+        const tile = await client.cog.tiles.get({
+          x: 15304,
+          y: 27127,
+          z: 16,
+          url: "https://storage.googleapis.com/pdd-stac/disasters/hurricane-harvey/0831/20170831_172754_101c_3b_Visual.tif"
+        });
+        eq(tile instanceof ArrayBuffer, true);
+      });
+    </script>
+  </body>
+</html>
