@@ -45,6 +45,11 @@ client will looks something like this
   },
 }
 ```
+and here's a sample request to the `/cog/tiles/{z}/{x}/{y}?url={url}` endpoint
+```
+const result = await client.cog.tiles.get({ z: 8, x: 12, y: 4, url: "https://example.org/data/test.tif" });
+// result is an array buffer
+```
 
 # note
 This is not an official OpenAPI library and the author is not affiliated with OpenAPI.
