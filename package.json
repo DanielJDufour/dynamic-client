@@ -4,6 +4,9 @@
   "description": "Dynamic JavaScript Client for APIs that have an OpenAPI Definition. Emphasis on Easy Navigation of API Paths.",
   "main": "open-api-client.js",
   "type": "module",
+  "files": [
+    "open-api-client.js"
+  ],
   "scripts": {
     "format": "npx prettier --arrow-parens=avoid --trailing-comma=none --write *.js",
     "test": "node test.js",
