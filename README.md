@@ -46,7 +46,7 @@ client will looks something like this
 }
 ```
 and here's a sample request to the `/cog/tiles/{z}/{x}/{y}?url={url}` endpoint
-```
+```js
 const result = await client.cog.tiles.get({ z: 8, x: 12, y: 4, url: "https://example.org/data/test.tif" });
 // result is an array buffer
 ```
