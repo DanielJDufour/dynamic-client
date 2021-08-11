@@ -3,12 +3,12 @@
   <head>
     <script src="https://unpkg.com/flug"></script>
     <script src="https://unpkg.com/easy-script-loader"></script>
-    <script src="./open-api-client.js" type="module"></script>
+    <script src="./dynamic-client.js" type="module"></script>
   </head>
   <body>
     <script type="module">
       test("example: fetching array buffer", async ({ eq }) => {
-        const client = new OpenAPIClient({ url: "http://localhost:8000/" });
+        const client = new DynamicClient({ url: "http://localhost:8000/" });
         await client.init();
         const tile = await client.cog.tiles.get({
           x: 15304,

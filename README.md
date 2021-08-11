@@ -1,4 +1,4 @@
-# open-api-client
+# dynamic-client
 Dynamic JavaScript Client for APIs that have an OpenAPI Definition.  Emphasis on Easy Navigation of API Paths.
 
 # features
@@ -8,14 +8,14 @@ Dynamic JavaScript Client for APIs that have an OpenAPI Definition.  Emphasis on
 
 # install
 ```bash
-npm install open-api-client
+npm install dynamic-client
 ```
 
 # usage
 ```js
-import { OpenAPIClient } from 'open-api-client';
+import { DynamicClient } from 'dynamic-client';
 
-const client = new OpenAPIClient({
+const client = new DynamicClient({
   url: "https://example.org/api",
 
   // optional debug level
@@ -50,6 +50,3 @@ and here's a sample request to the `/cog/tiles/{z}/{x}/{y}?url={url}` endpoint
 const result = await client.cog.tiles.get({ z: 8, x: 12, y: 4, url: "https://example.org/data/test.tif" });
 // result is an array buffer
 ```
-
-# note
-This is not an official OpenAPI library and the author is not affiliated with OpenAPI.

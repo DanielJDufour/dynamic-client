@@ -1,8 +1,8 @@
 import test from "flug";
-import { OpenAPIClient } from "./open-api-client.js";
+import { DynamicClient } from "./dynamic-client.js";
 
 test("creation", async ({ eq }) => {
-  const client = new OpenAPIClient({ url: "http://localhost:8000/" });
+  const client = new DynamicClient({ url: "http://localhost:8000/" });
   await client.init();
   console.log("client:", Object.keys(client));
   eq(Object.keys(client).length > 5, true);
@@ -10,7 +10,7 @@ test("creation", async ({ eq }) => {
 });
 
 test("example: fetching list of stac assets", async ({ eq }) => {
-  const client = new OpenAPIClient({ url: "http://localhost:8000/" });
+  const client = new DynamicClient({ url: "http://localhost:8000/" });
   await client.init();
   const assets = await client.stac.assets.get({
     url:
@@ -20,7 +20,7 @@ test("example: fetching list of stac assets", async ({ eq }) => {
 });
 
 test("example: fetching array buffer", async ({ eq }) => {
-  const client = new OpenAPIClient({
+  const client = new DynamicClient({
     debugLevel: 0,
     url: "http://localhost:8000/"
   });

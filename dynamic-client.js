@@ -2,7 +2,7 @@ import axios from "axios";
 
 const RE_PATH_VAR = /{[^}]+}/g;
 
-export class OpenAPIClient {
+export class DynamicClient {
   constructor({ debugLevel = 0, url }) {
     // remove trailing slash
     this._base = url.replace(/\/$/, "");
@@ -12,11 +12,11 @@ export class OpenAPIClient {
   async init() {
     const definitionUrl = this._base.replace(/\/$/, "") + "/openapi.json";
     if (this._debugLevel >= 1)
-      console.log("[open-api-client] definitionUrl:", definitionUrl);
+      console.log("[dynamic-client] definitionUrl:", definitionUrl);
 
     const { data: definition } = await axios.get(definitionUrl);
     if (this._debugLevel >= 2)
-      console.log("[open-api-client] definition:", definition);
+      console.log("[dynamic-client] definition:", definition);
 
     const groups = {};
     Object.entries(definition.paths).forEach(([path, methods]) => {
@@ -31,15 +31,15 @@ export class OpenAPIClient {
         })
         .filter(it => it.length > 0);
 
-      if (this._debugLevel >= 3) console.log("[open-api-client] parts:", parts);
+      if (this._debugLevel >= 3) console.log("[dynamic-client] parts:", parts);
 
       const key = JSON.stringify(parts);
       if (key in groups) groups[key].push({ path, methods });
       else groups[key] = [{ path, methods }];
     });
-    if (this._debugLevel >= 2) console.log("[open-api-client] groups:", groups);
+    if (this._debugLevel >= 2) console.log("[dynamic-client] groups:", groups);
 
-    // add groups to API Client
+    // add groups to Dynamic Client
     Object.entries(groups).forEach(([key, grp]) => {
       const parts = JSON.parse(key);
       let obj = this;
@@ -97,13 +97,13 @@ export class OpenAPIClient {
             else if (param.in === "query") query.append(k, v);
             else
               throw new Error(
-                '[open-api-client] unsupported "in" value:',
+                '[dynamic-client] unsupported "in" value:',
                 param
               );
             // need to add support for post
           });
           url = this._base + url + "?" + query.toString();
-          if (this._debugLevel >= 2) console.log("[open-api-client] url:", url);
+          if (this._debugLevel >= 2) console.log("[dynamic-client] url:", url);
 
           return axios[method](url, { responseType }).then(res => res.data);
         };
@@ -112,4 +112,4 @@ export class OpenAPIClient {
   }
 }
 
-if (typeof window === "object") window.OpenAPIClient = OpenAPIClient;
+if (typeof window === "object") window.DynamicClient = DynamicClient;
