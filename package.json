@@ -1,11 +1,11 @@
 {
-  "name": "dynamic-api-client",
+  "name": "dynamic-client",
   "version": "0.0.0",
   "description": "Dynamic JavaScript Client for APIs that have an OpenAPI Definition. Emphasis on Easy Navigation of API Paths.",
-  "main": "dynamic-api-client.js",
+  "main": "dynamic-client.js",
   "type": "module",
   "files": [
-    "dynamic-api-client.js"
+    "dynamic-client.js"
   ],
   "scripts": {
     "format": "npx prettier --arrow-parens=avoid --trailing-comma=none --write *.js",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DanielJDufour/dynamic-api-client.git"
+    "url": "git+https://github.com/DanielJDufour/dynamic-client.git"
   },
   "keywords": [
     "api",
@@ -24,9 +24,9 @@
   "author": "Daniel J. Dufour",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/DanielJDufour/dynamic-api-client/issues"
+    "url": "https://github.com/DanielJDufour/dynamic-client/issues"
   },
-  "homepage": "https://github.com/DanielJDufour/dynamic-api-client#readme",
+  "homepage": "https://github.com/DanielJDufour/dynamic-client#readme",
   "dependencies": {
     "axios": "^0.21.1"
   },
