@@ -1,6 +1,6 @@
 {
   "name": "dynamic-client",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Dynamic JavaScript Client for APIs that have an OpenAPI Definition. Emphasis on Easy Navigation of API Paths.",
   "main": "dynamic-client.js",
   "type": "module",
